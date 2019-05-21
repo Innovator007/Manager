@@ -1,37 +1,45 @@
 import React from 'react';
+import { AntDesign } from '@expo/vector-icons';
 import { View, Text, Modal, StyleSheet } from 'react-native'
 import Button from './Button';
-import CardSection from './CardSection';
 
 const Confirm = ({ children, onAccept, onDecline, visible }) => {
-	const { cardSectionStyle, textStyle, containerStyle } = styles;
+	const { viewContainer, textStyle, containerStyle } = styles;
 	return (
 		<Modal
-			animationType="fade"
+			animationType="slide"
 			onRequestClose={() => {}}
 			transparent
 			visible={visible}
 		>
 			<View style={containerStyle}>
-				<CardSection style={cardSectionStyle}>
+				<View style={viewContainer}>
+					<AntDesign name="delete" size={100} />
+				</View>
+				<View style={viewContainer}>
 					<Text style={textStyle}>{ children }</Text>
-				</CardSection>
-				<CardSection style={cardSectionStyle}>
+				</View>
+				<View style={viewContainer}>
 					<Button btncolor="#ff0000" onPress={onDecline}>
 						Cancel
 					</Button>
 					<Button btncolor="#33ccff" onPress={onAccept}>
 						Okay
 					</Button>
-				</CardSection>
+				</View>
 			</View>
 		</Modal>
 	);
 }
 
 const styles = StyleSheet.create({
-	cardSectionStyle: {
-		justifyContent: 'center'
+	viewContainer: {
+		padding: 10,
+		backgroundColor: '#fff',
+		borderRadius: 20,
+		justifyContent: 'center',
+		flexDirection: 'row',
+		position: 'relative'
 	},
 	textStyle: {
 		flex: 1,
@@ -40,11 +48,17 @@ const styles = StyleSheet.create({
 		lineHeight: 40
 	},
 	containerStyle: {
-		backgroundColor: 'rgba(0,0,0,0.6)',
 		position: 'relative',
 		flex: 1,
-		justifyContent: 'center',
-		paddingHorizontal: 15
+		margin: 10,
+		borderRadius: 20,
+		borderWidth: 1,
+		borderColor: "#eee",
+		marginTop: 350,
+		justifyContent: 'flex-end',
+		height: "auto",
+		alignContent: "center",
+		backgroundColor: "#fff"
 	}
 });
 

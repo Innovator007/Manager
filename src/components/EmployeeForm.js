@@ -64,12 +64,12 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection:'row',
     flex: 1,
-    borderWidth: 1,
+    borderBottomWidth: 1,
     backgroundColor: 'transparent',
-    borderColor: '#ccc',
+    borderColor: '#33ccff', 
     margin: 5,
-    padding:10,
-    borderRadius: 5
+    padding: 10,
+    fontSize: 16
   }
 });
 

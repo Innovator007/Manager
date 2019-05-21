@@ -7,10 +7,11 @@ import Spinner from './Spinner';
 import Card from './Card';
 import CardSection from './CardSection';
 import Button from './Button';
+import { Actions } from 'react-native-router-flux';
 import { emailChanged, passwordChanged, loginUser } from '../actions/index';
 
 class LoginForm extends Component {
-  
+
   onEmailChange = (email) => {
     this.props.emailChanged(email);
   }
@@ -85,12 +86,12 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection:'row',
     flex: 1,
-    borderWidth: 1,
+    borderBottomWidth: 1,
     backgroundColor: 'transparent',
-    borderColor: '#ccc',
+    borderColor: '#33ccff', 
     margin: 5,
-    padding:10,
-    borderRadius: 5
+    padding: 10,
+    fontSize: 16
   }
 });
 

@@ -2,23 +2,54 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { ListView, StyleSheet, TouchableNativeFeedback, View, ScrollView, Text } from 'react-native';
+import { ListView, StyleSheet, BackHandler, Alert, TouchableNativeFeedback, View, ScrollView, Text } from 'react-native';
 import firebase from 'firebase';
 import Button from './Button';
 import Spinner from './Spinner';
 import { employeeFetch } from '../actions/index';
 
+var backButtonPressedOnceToExit = false;
+
 class EmployeeList extends Component {
 	componentWillMount() {
 		this.props.employeeFetch();
 		this.createDataSource(this.props);
-	}
+      	BackHandler.addEventListener('hardwareBackPress', this.onBackPress.bind(this));
+  	}
+
+  componentWillUnmount(){
+      BackHandler.removeEventListener('hardwareBackPress', this.onBackPress.bind(this));
+  }
+
+  onBackPress() {
+  	if(Actions.currentScene == "employeeList") {
+  		Alert.alert(
+          'Exit Application',
+          'Do you really want to exit?', [{
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel'
+          }, {
+              text: 'OK',
+              onPress: () => BackHandler.exitApp()
+          }, ], {
+              cancelable: false
+          }
+      )
+      return true;
+  	} else {
+  		Actions.main();
+  		return true;
+  	}
+  }
 
 	componentWillReceiveProps(nextProps) {
 		//nextProps are the next set of props this component will be rendered with
 		//this.props is still the old set of props
 		this.createDataSource(nextProps);
 	}
+
+	
 
 	createDataSource({ employeeList }) {
 		const ds = new ListView.DataSource({
@@ -68,7 +99,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 10,
 		marginVertical: 5,
 		marginHorizontal: 10, 
-		borderRadius: 5,
+		borderRadius: 10,
 		backgroundColor: "#fff"
 	},
 	employeeNameStyle: {

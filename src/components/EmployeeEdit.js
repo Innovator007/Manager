@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import { ToastAndroid } from 'react-native';
+import { ToastAndroid, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import Communications from 'react-native-communications';
@@ -25,6 +25,7 @@ class EmployeeEdit extends Component {
 	}
 
 	componentWillUnmount() {
+		this.setState({ loading: false, showModal: false });
 		this.resetreduxState()
 	}
 
@@ -82,6 +83,7 @@ class EmployeeEdit extends Component {
 
 	render() {
 		return (
+		<ScrollView>
 			<Card>
 				
 				<EmployeeForm { ...this.props } />
@@ -113,6 +115,7 @@ class EmployeeEdit extends Component {
 		        </Confirm>
 
 	      	</Card>
+		</ScrollView>
 		);
 	}
 }
