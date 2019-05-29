@@ -2,7 +2,7 @@ import React,{ Component } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableNativeFeedback,TextInput } from 'react-native';
+import { StyleSheet, Text, View, BackHandler, Alert, TouchableNativeFeedback,TextInput } from 'react-native';
 import Spinner from './Spinner';
 import Card from './Card';
 import CardSection from './CardSection';
@@ -11,6 +11,35 @@ import { Actions } from 'react-native-router-flux';
 import { emailChanged, passwordChanged, loginUser } from '../actions/index';
 
 class LoginForm extends Component {
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.onBackPress.bind(this));
+  }
+
+  componentWillUnmount(){
+      BackHandler.removeEventListener('hardwareBackPress', this.onBackPress.bind(this));
+  }
+
+  onBackPress() {
+    if(Actions.currentScene == "login") {
+      Alert.alert(
+          'Exit Application',
+          'Do you really want to exit?', [{
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel'
+          }, {
+              text: 'OK',
+              onPress: () => BackHandler.exitApp()
+          }, ], {
+              cancelable: false
+          }
+      )
+      return true;
+    } else {
+      Actions.auth();
+      return true;
+    }
+  }
 
   onEmailChange = (email) => {
     this.props.emailChanged(email);

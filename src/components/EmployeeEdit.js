@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import { ToastAndroid, ScrollView } from 'react-native';
+import { ToastAndroid, ScrollView, Vibration } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import Communications from 'react-native-communications';
@@ -38,6 +38,7 @@ class EmployeeEdit extends Component {
 				'All Fields are Required!',
 				ToastAndroid.SHORT
 			);
+			Vibration.vibrate(100);
 			this.setState({ loading: false });
 		} else {
 			this.props.employeeChange({ fullname, occupation, phone, shift, uid: this.props.employee.uid });
@@ -45,8 +46,8 @@ class EmployeeEdit extends Component {
 	}
 
 	onTextPress() {
-		const { phone, shift } = this.props;
-		Communications.text(phone, `Your upcoming shift is on ${shift}`);
+		const { fullname, phone, shift } = this.props;
+		Communications.text(phone, `Hi ${fullname.split(" ")[0]},\nYour upcoming shift is on ${shift}`);
 	}
 
 	resetreduxState() {

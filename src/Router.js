@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { Alert } from 'react-native';
-import { AntDesign, Entypo } from '@expo/vector-icons';
-import { Scene, Router, Actions } from 'react-native-router-flux';
+import { AntDesign } from '@expo/vector-icons';
+import { Stack, Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import EmployeeList from './components/EmployeeList';
 import EmployeeCreate from './components/EmployeeCreate';
@@ -34,13 +34,13 @@ class RouterComponent extends Component {
 	render() {
 		return (
 			<Router {...sceneConfig} navBarButtonColor="#fff" navigationBarStyle={{ backgroundColor: '#33ccff' }}>
-				<Scene key="root" hideNavBar>
+				<Stack key="root" hideNavBar>
 					<Scene key="auth">
 						<Scene 
 							key="login" 
 							component={LoginForm} 
 							title="Manager Login" 
-							titleStyle={{flex:1,textAlign:'center',color:'#fff'}} 
+							titleStyle={{flex:1,textAlign:'center',color:'#fff'}}
 							initial
 						/>
 					</Scene>
@@ -48,15 +48,29 @@ class RouterComponent extends Component {
 						<Scene	
 							leftTitle={<AntDesign name="logout" size={25} />}
 							onLeft={() => {
-								firebase.auth().signOut()
-								Actions.auth()
+								Alert.alert(
+						          'Log Out',
+						          'Do you want to logout of Manager', [{
+						              text: 'Cancel',
+						              onPress: () => console.log('Cancel Pressed'),
+						              style: 'cancel'
+						          }, {
+						              text: 'OK',
+						              onPress: () => {
+						              	firebase.auth().signOut()
+										Actions.auth()
+						              }
+						          }, ], {
+						              cancelable: false
+						          }
+							    )
 							}}
 							rightTitle={<AntDesign name="adduser" size={25} />}
 							onRight={() => Actions.employeeCreate() }
 							key="employeeList"
 							component={EmployeeList}
 							title="Employees"
-							titleStyle={{flex:1,textAlign:'center',color:'#fff'}} 
+							titleStyle={{flex:1,textAlign:'center',color:'#fff'}}
 						/>
 						<Scene	
 							key="employeeCreate"
@@ -75,7 +89,7 @@ class RouterComponent extends Component {
 							leftButtonIconStyle={{ tintColor: '#fff' }}
 						/>
 					</Scene>	
-				</Scene>
+				</Stack>
 			</Router>
 		);
 	}

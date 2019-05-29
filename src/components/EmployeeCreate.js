@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import {ToastAndroid} from 'react-native';
+import {ToastAndroid,Vibration} from 'react-native';
 import { connect } from 'react-redux';
 import Card from './Card';
 import CardSection from './CardSection';
@@ -21,6 +21,7 @@ class EmployeeCreate extends Component {
 				'All Fields are required!',
 				ToastAndroid.SHORT
 			);
+			Vibration.vibrate(100);
 			this.setState({ loading: false });
 		} else {
 			this.props.employeeCreate({ fullname,occupation,phone,shift: shift || 'Monday' });

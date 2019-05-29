@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AntDesign } from '@expo/vector-icons';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -7,8 +8,6 @@ import firebase from 'firebase';
 import Button from './Button';
 import Spinner from './Spinner';
 import { employeeFetch } from '../actions/index';
-
-var backButtonPressedOnceToExit = false;
 
 class EmployeeList extends Component {
 	componentWillMount() {
@@ -59,28 +58,25 @@ class EmployeeList extends Component {
 	}
 
 	render() {
-		if(!this.props.employeeList) {
-			return <Spinner />
-		} else {
-			return (
-				<ListView
-					enableEmptySections
-					dataSource={this.dataSource}
-					renderRow={(employeeItem) => {
-						return (
-							<ScrollView style={{marginTop:5}}>
+		return (
+			<ListView
+				enableEmptySections
+				dataSource={this.dataSource}
+				renderRow={(employeeItem) => {
+					return (
+						<ScrollView style={{marginTop:5}}>
 							<TouchableNativeFeedback onPress={()=> Actions.employeeEdit({ employee: employeeItem })}>
 								<View style={styles.employeeContainer}>
 									<Text style={styles.employeeNameStyle}>{employeeItem.fullname}</Text>
-									<Text>{employeeItem.occupation} - {employeeItem.shift}</Text>
+									<Text>{employeeItem.occupation}</Text>
+									<Text><AntDesign name="calendar" size={16} /> {employeeItem.shift}</Text>
 								</View>
 							</TouchableNativeFeedback>
 						</ScrollView>
-						);
-					}}
-				/>
-			);
-		}
+					);
+				}}
+			/>
+		);
 	}
 }
 

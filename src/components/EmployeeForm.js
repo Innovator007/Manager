@@ -5,6 +5,9 @@ import { employeeUpdate } from '../actions/index';
 import CardSection from './CardSection';
 
 class EmployeeForm extends Component {
+	state = {
+		checked: false
+	}
 	render() {
 		return (
 			<View>
